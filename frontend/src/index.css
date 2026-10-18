@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #070d18;
+  color: #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(249, 115, 22, 0.05) 0%, transparent 50%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar for sleek CV dashboard */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #090e17;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Glassmorphism panel styling */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.12);
+}
+
+.glass-panel:hover {
+  border-color: rgba(56, 189, 248, 0.22);
+}
+
+/* Corner HUD Target Markers for CV aesthetic */
+.hud-corner-tl {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid #38bdf8;
+  border-left: 2px solid #38bdf8;
+  pointer-events: none;
+}
+.hud-corner-tr {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid #38bdf8;
+  border-right: 2px solid #38bdf8;
+  pointer-events: none;
+}
+.hud-corner-bl {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 12px;
+  height: 12px;
+  border-bottom: 2px solid #38bdf8;
+  border-left: 2px solid #38bdf8;
+  pointer-events: none;
+}
+.hud-corner-br {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 12px;
+  height: 12px;
+  border-bottom: 2px solid #38bdf8;
+  border-right: 2px solid #38bdf8;
+  pointer-events: none;
+}
+
+/* Radar Scan animation for visual scanning */
+@keyframes radar-sweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-radar {
+  animation: radar-sweep 2.5s ease-in-out infinite;
+}
