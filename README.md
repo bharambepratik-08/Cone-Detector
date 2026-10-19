@@ -1,22 +1,35 @@
 # 🚧 Cone Detection System (YOLO26n Computer Vision Application)
 
-An end-to-end Computer Vision web application built with **React**, **FastAPI**, and **Ultralytics YOLO** for real-time cone detection and analysis.
+## 📌 Project Overview
+
+An end-to-end computer vision web application built with **React, FastAPI, and Ultralytics YOLO26n** for traffic cone detection and analysis across images, videos, and live webcam feeds.
+
+The application uses a custom-trained object detection model to identify cones, generate bounding boxes, display confidence scores, and provide detection analytics through an interactive web interface. It combines machine learning, computer vision, and full-stack development into a single application.
+
+## 🎯 Project Context
+
+This project was developed as part of the technical selection process for **Team Matrix**. It provided an opportunity to apply machine learning and computer vision concepts by training and evaluating a YOLO26n model and integrating it into a React and FastAPI web application.
+
+The project contributed to my selection for the club and reflects my interest in developing practical AI-powered systems.
 
 ---
 
 ## 📊 Model Specifications & Test Evaluation Results
 
-The application runs a custom-trained **YOLO26n** model targeting the object class `cone_shape`.
-The model was evaluated on **73 independent test images** (`ConeDetection/cone_shape_detector`), achieving:
+The application uses a custom-trained **YOLO26n** model targeting the object class `cone_shape`.
+
+The model was evaluated on **73 test images**, containing 157 evaluated cone instances, achieving the following results:
 
 | Metric | Result | Description |
 | :--- | :---: | :--- |
-| **Precision (P)** | **91.27%** | High certainty; low rate of false alarms |
-| **Recall (R)** | **93.18%** | Captures over 93% of ground-truth cones in test scenes |
-| **mAP @ 0.50** | **95.60%** | Mean Average Precision at IoU 0.50 threshold |
-| **mAP @ 0.50–0.95** | **74.85%** | Strict localization metric across 10 IoU intervals |
-| **Target Class** | `cone_shape` | Dedicated single-class detector |
-| **Model Weights** | `best.pt` | Loaded dynamically on server boot |
+| **Precision (P)** | **91.27%** | Proportion of predicted detections that were correct under the evaluation settings |
+| **Recall (R)** | **93.18%** | Proportion of ground-truth cone instances successfully detected |
+| **mAP @ 0.50** | **95.60%** | Mean Average Precision at an IoU threshold of 0.50 |
+| **mAP @ 0.50–0.95** | **74.85%** | Mean Average Precision averaged across IoU thresholds from 0.50 to 0.95 |
+| **Target Class** | `cone_shape` | Single-class cone detector |
+| **Model Weights** | `best.pt` | Trained checkpoint loaded by the backend for inference |
+
+*Note: These metrics reflect performance on the test dataset and do not guarantee identical performance in real-world conditions.*
 
 ---
 
@@ -25,82 +38,141 @@ The model was evaluated on **73 independent test images** (`ConeDetection/cone_s
 ```text
 Cone_Detector/
 ├── backend/
-│   ├── main.py              # FastAPI server (Inference endpoints, validation, CORS)
-│   ├── requirements.txt     # Python dependencies (FastAPI, Ultralytics, PyTorch, OpenCV, ImageIO)
-│   ├── weights/             # 📍 Model weights: best.pt
-│   ├── uploads/             # Temporary processing storage (auto-cleaned)
-│   └── outputs/             # Output annotated videos (auto-cleaned)
+│   ├── main.py              # FastAPI server and inference endpoints
+│   ├── requirements.txt     # Python backend dependencies
+│   ├── weights/
+│   │   └── best.pt          # Trained model weights
+│   ├── uploads/             # Temporary uploaded files
+│   └── outputs/             # Generated detection outputs
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Navbar.jsx          # Live model status badge & tab navigation
-│   │   │   ├── ImageDetector.jsx   # Image upload, bounding boxes, zero-detection handling, download
-│   │   │   ├── VideoDetector.jsx   # Video processing, H.264 stream encoding, analytics report
-│   │   │   ├── CameraDetector.jsx  # Real-time webcam feed with live cone counter & snapshot
-│   │   │   └── ProjectInfo.jsx     # YOLO26n architecture, verified evaluation scorecard & metrics
-│   │   ├── App.jsx                 # Main application dashboard
-│   │   └── index.css               # Professional dark navy and blue computer-vision theme
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── ImageDetector.jsx
+│   │   │   ├── VideoDetector.jsx
+│   │   │   ├── CameraDetector.jsx
+│   │   │   └── ProjectInfo.jsx
+│   │   ├── App.jsx
+│   │   └── index.css
 │   ├── package.json
-│   └── vite.config.js              # Vite server & API proxy
-├── run_backend.bat          # 1-click Windows backend runner
-├── run_frontend.bat         # 1-click Windows frontend runner
+│   └── vite.config.js
+├── run_backend.bat          # Windows backend launcher
+├── run_frontend.bat         # Windows frontend launcher
 └── README.md
 ```
+
+*The structure above summarizes the main project files. Temporary and generated files may vary.*
 
 ---
 
 ## ⚡ Quick Start Guide (Windows)
 
-### Step 1: Model Placement
-The trained weights file `best.pt` is stored at:
+### Step 1: Place the Model
+
+Ensure the trained model checkpoint is available at:
+
 ```text
 Cone_Detector\backend\weights\best.pt
 ```
-*(If you have updated weights from Google Drive, copy `best.pt` to this folder or upload it through the web UI under the **Model & Evaluation** tab).*
 
----
+If the checkpoint is stored elsewhere, copy it to this location or update the model path in the backend configuration.
 
 ### Step 2: Start the Backend (FastAPI)
-Open a terminal in the project folder and run:
+
+Open a terminal in the project root and run:
+
 ```powershell
 cd backend
 python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
-*Or double-click `run_backend.bat`.*
 
-The backend initializes at: `http://127.0.0.1:8000`
+Alternatively, double-click `run_backend.bat` if it is configured for your environment.
 
----
+The backend should be available at:
+
+`http://127.0.0.1:8000`
 
 ### Step 3: Start the Frontend (React + Vite)
-Open a second terminal and run:
+
+Open a second terminal in the project root and run:
+
 ```powershell
 cd frontend
+npm install
 npm run dev
 ```
-*Or double-click `run_frontend.bat`.*
 
-Open your browser and navigate to:
-```text
-http://localhost:5173
-```
+Alternatively, double-click `run_frontend.bat`.
+
+Open the local URL shown in the terminal. For a typical Vite development server, this is:
+
+`http://localhost:5173`
+
+**Note:** These commands assume the FastAPI application instance is named `app` in `backend/main.py` and the frontend uses the standard Vite development configuration.
 
 ---
 
-## 🎯 Verification & Features
+## 🎯 Features
 
-1. **Dashboard & Status Indicator**: Live model verification confirming your custom `best.pt`, target class (`cone_shape`), and device (CUDA / CPU).
-2. **Image Detection**:
-   - Supports JPG, JPEG, and PNG images with safety validation (file extension, size check, safe downscaling for huge images).
-   - Real-time YOLO inference returning labeled bounding boxes, total detections, and confidence scores.
-   - Distinct **"No Cones Detected"** state with suggestions when objects are below threshold.
-   - 1-click download of the annotated image.
-3. **Video Processing**:
-   - Supports MP4, AVI, MOV, WEBM.
-   - Frame-by-frame YOLO inference with detection density overlay.
-   - Encodes to standard H.264 MP4 for instant browser playback.
-4. **Real-Time Webcam Detection**:
-   - Live camera stream with live cone counter and latency (ms).
-   - "Save Snapshot" button to capture and download any live frame.
-5. **Verified Evaluation Scorecard**:
-   - Displays real test evaluation metrics: **Precision 91.27%**, **Recall 93.18%**, **mAP50 95.60%**, and **mAP50–95 74.85%**.
+### 1. Dashboard and Model Status
+
+- Displays model status and relevant model information.
+- Shows the target class and inference device where supported by the implementation.
+
+### 2. Image Detection
+
+- Supports JPG, JPEG, and PNG images.
+- Generates bounding boxes, confidence scores, and detection counts.
+- Handles images where no cones are detected.
+- Supports downloading annotated images.
+
+### 3. Video Processing
+
+- Supports video formats including MP4, AVI, MOV, and WEBM, subject to backend codec support.
+- Processes video frames for cone detection.
+- Generates annotated video output and detection analytics where supported.
+
+### 4. Real-Time Webcam Detection
+
+- Uses a webcam feed for cone detection.
+- Displays detection counts and latency where implemented.
+- Supports saving detection snapshots.
+
+### 5. Model Evaluation
+
+- Presents model evaluation metrics: Precision, Recall, mAP@0.50, and mAP@0.50–0.95.
+- Provides information about the trained model and its target class.
+
+---
+
+## 🛠️ Technologies Used
+
+- **Python** — backend development and model inference
+- **FastAPI** — API development
+- **React** — frontend user interface
+- **Vite** — frontend development and build tooling
+- **Ultralytics YOLO26n** — object detection
+- **PyTorch** — deep learning framework
+- **OpenCV** — image and video processing, if used by the implementation
+
+---
+
+## 🚀 Future Improvements
+
+- Evaluate the model on a larger and more diverse dataset.
+- Improve robustness under different lighting, weather, and camera conditions.
+- Test detection performance on distant, occluded, and visually similar objects.
+- Optimize inference speed and deployment resource usage.
+- Explore integration with robotics and live camera systems.
+
+---
+
+## 👨‍💻 Author
+
+**Pratik Bharambe**
+
+GitHub: [bharambepratik-08](https://github.com/bharambepratik-08)
+
+---
+
+*This project is intended for educational and experimental use. Model predictions should not be used as the sole basis for road-safety decisions.*
